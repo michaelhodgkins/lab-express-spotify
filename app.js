@@ -27,6 +27,23 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.get('/artist-search', (req, res) => {
+    console.log(req.query)
+    const artist = req.query.searchArtists
+
+spotifyApi
+  .searchArtists(artist)
+  .then(data => {
+    console.log('The received data from the API: ', data.body);
+    const artists = data.body.artists.items;
+    console.log('Here is the rest: ', artists);
+    res.render("artist-search-results", { artists })
+  })
+  .catch(err => console.log('The error while searching artists occurred: ', err));
+});
+
+
+
 
 
 
